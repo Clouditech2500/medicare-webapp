@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-medicare-dev-3ed96-authRole",
+      "UnauthRoleArn": "arn:aws:iam::588738568186:role/amplify-medicare-dev-3ed96-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::588738568186:role/amplify-medicare-dev-3ed96-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-medicare-dev-3ed96-deployment",
+      "UnauthRoleName": "amplify-medicare-dev-3ed96-unauthRole",
+      "StackName": "amplify-medicare-dev-3ed96",
+      "StackId": "arn:aws:cloudformation:us-east-1:588738568186:stack/amplify-medicare-dev-3ed96/9a4697f0-66ca-11f0-9d8a-0efe708628ff",
+      "AmplifyAppId": "d1hn0wlmrx31uq"
+    },
+    "categories": {
+      "storage": {
+        "PatientAppointments": {}
+      },
+      "api": {
+        "medicare": {}
+      }
+    }
+  }
+}
