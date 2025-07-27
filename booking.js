@@ -1,6 +1,6 @@
 import { Amplify } from 'aws-amplify';
 import { generateClient } from 'aws-amplify/api';
-import { createTodo } from './src/graphql/mutations.js';
+import { createTodo } from './mutations.js';
 import config from './amplifyconfiguration.json';
 
 // Configure Amplify
