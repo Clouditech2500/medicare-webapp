@@ -1,41 +1,7 @@
-// No imports needed - using CDN
-const { Amplify } = window.aws_amplify_core;
-const { generateClient } = window.aws_amplify_api;
-
-// Your Amplify configuration
-const config = {
-  "aws_project_region": "us-east-1",
-  "aws_appsync_graphqlEndpoint": "https://bo3osctiv5e2bpywqzdnkxfbra.appsync-api.us-east-1.amazonaws.com/graphql",
-  "aws_appsync_region": "us-east-1",
-  "aws_appsync_authenticationType": "API_KEY",
-  "aws_appsync_apiKey": "da2-e6iy6b4mi5eodmfxatmdbi5aeq"
-};
-
-// GraphQL mutation
-const createTodo = `
-  mutation CreateTodo(
-    $input: CreateTodoInput!
-    $condition: ModelTodoConditionInput
-  ) {
-    createTodo(input: $input, condition: $condition) {
-      id
-      name
-      description
-      firstName
-      lastName
-      email
-      phone
-      appointmentDate
-      appointmentTime
-      doctor
-      reason
-      status
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
+import { Amplify } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/api';
+import { createTodo } from './mutations.js';
+import config from './amplifyconfiguration.json';
 
 // Configure Amplify
 Amplify.configure(config);
@@ -94,13 +60,13 @@ document.querySelectorAll('input[required]').forEach(input => {
     input.addEventListener('input', checkFormCompletion);
 });
 
-// Form submission with database save
+// Form submission handler for Amplify DynamoDB
 document.getElementById('bookingForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     console.log('Form submitted - starting to save data...');
     
-    // Create appointment data
+    // Create appointment data with all fields
     const formData = {
         name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
         description: `Appointment with ${selectedDoctor} at ${selectedTime} on ${document.getElementById('appointmentDate').value}. Email: ${document.getElementById('email').value}, Phone: ${document.getElementById('phone').value}, Reason: ${document.getElementById('reason').value || 'General consultation'}`,
@@ -116,14 +82,13 @@ document.getElementById('bookingForm').addEventListener('submit', async function
     };
     
     console.log('Form data prepared:', formData);
-    
+
     try {
-        // Save to database
         const result = await client.graphql({
             query: createTodo,
             variables: { input: formData }
-        });
-        
+        }); 
+
         console.log('Appointment saved successfully:', result);
         
         // Show success modal
@@ -138,7 +103,7 @@ document.getElementById('bookingForm').addEventListener('submit', async function
         
     } catch (error) {
         console.error('Error saving appointment:', error);
-        alert('Sorry, there was an error submitting your appointment. Please try again.');
+        alert('Error submitting appointment. Please try again.');
     }
 });
 
